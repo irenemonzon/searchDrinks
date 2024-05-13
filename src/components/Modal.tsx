@@ -6,7 +6,7 @@ import { DetailDrink } from '../types';
 
 export default function Modal() {
 
-    const {modal,closeModal, detailDrink}=useAppStore()
+    const {modal,closeModal, detailDrink,handleClickFavorite, favoriteExists}=useAppStore()
 
     const renderIngredients=()=>{
 
@@ -67,7 +67,8 @@ export default function Modal() {
                   <DialogTitle as="h3" className="text-gray-900 text-2xl font-extrabold my-5">
                     Instrucciones
                   </DialogTitle>
-                  <p className='text-lg'>           {detailDrink.strInstructions}
+                  <p className='text-lg'>
+                    {detailDrink.strInstructions}
                   </p>
                   <div className='mt-5 flex justify-between gap-4'>
                     <button 
@@ -80,8 +81,9 @@ export default function Modal() {
                     <button 
                         type='button'
                         className='w-full rounded bg-orange-600 p-3 font-bold text-white shadow hover:bg-orange-500'
+                        onClick={()=>handleClickFavorite(detailDrink)}
                         >
-                        Agregar a favoritos
+                          {favoriteExists(detailDrink.idDrink) ? ' Eliminar Favorito': 'Agregar a favoritos'}
                     </button>
                 </div>
                 </DialogPanel>
