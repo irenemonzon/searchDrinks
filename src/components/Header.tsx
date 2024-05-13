@@ -1,6 +1,7 @@
 import { useEffect, useMemo,useState,ChangeEvent,FormEvent } from "react";
 import {NavLink,useLocation } from "react-router-dom"
 import { useAppStore } from "../stores/useAppStore";
+import Notification from "./Notification";
 
 const Header = () => {
   
@@ -13,7 +14,7 @@ const Header = () => {
 
   const isHome=useMemo(()=> pathname==='/' ,[pathname])
 
-  const {fetchCategories,categories,searchRecipes}=useAppStore()
+  const {fetchCategories,categories,searchRecipes,showNotification}=useAppStore()
 
 
   useEffect(()=>{
@@ -32,9 +33,11 @@ const Header = () => {
   const handleSubmit=(e:FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
 
-    //Todo:Validar formulario
     if(Object.values(searchFilter).includes('')){
-      console.log('Todos los campos son obligatorios')
+      showNotification({
+        text:'Todos los campos son obligatorios',
+        error:true
+    })
       return
     }
     //consultar recetas
@@ -46,6 +49,7 @@ const Header = () => {
   return (
     <header className={isHome ? "bg-header bg-center bg-cover":'bg-slate-800'}>
         <div className="mx-auto container px-5 py-16">
+          <Notification/>
             <div className="flex justify-between items-center">
                 <div>
                     <img className="w-32" src="/logo.svg" alt="logo" />
